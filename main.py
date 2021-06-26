@@ -2,9 +2,6 @@ import tkinter as tk
 import random
 # import base64
 
-# TODO: encrypt save file
-
-
 class GUI:
     def __init__(self):
         """ commands that get run as soon as the game gets initialized"""
@@ -94,13 +91,18 @@ class GUI:
         self.user_points = 0
         self.user_points_var = tk.StringVar(self.master)
         self.button = tk.StringVar(self.master)
+
+        # corrections for self.boundary logic
         correction = self.boundary + 1
         more_correct = correction + 1
 
+        # labels
         self.top_label = tk.Label(self.master, text='aim trainer')
         self.top_label.grid(columnspan=self.boundary, row=0)
         self.bottom_label = tk.Label(self.master, textvariable=self.user_points_var)
         self.bottom_label.grid(columnspan=self.boundary, row=correction)
+
+        # distinguishing between difficulties
         if self.boundary == 4:
             try:
                 with open('highscores.txt', 'r') as file:
@@ -177,7 +179,6 @@ class GUI:
 
     def random_button(self):
         """ adds a random button """
-
         # since randint parameters are both inclusive!
         inclusive_correction = self.boundary - 1
 
@@ -206,6 +207,7 @@ class GUI:
     def game_over(self):
         """ adds the labels and buttons for game over """
 
+        # TODO: encrypt save file
         with open('highscores.txt', 'a') as file:
             if self.boundary == 4:
                 easy_format = 'easy {}\n'.format(self.user_points)
@@ -217,6 +219,7 @@ class GUI:
                 hard_format = 'hard {}\n'.format(self.user_points)
                 file.write(hard_format)
 
+        # labels for final points
         score_text = 'You got {} points!'.format(self.user_points)
         self.score_label = tk.Label(self.master, text=score_text)
         self.score_label.grid(columnspan=2, row=0)
