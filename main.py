@@ -1,6 +1,8 @@
 import tkinter as tk
 import random
-# import base64
+
+# TODO: find a way to make exe file not detected as a trojan, if possible
+
 
 class GUI:
     def __init__(self):
@@ -241,4 +243,3 @@ class GUI:
 if __name__ == '__main__':
     game_instance = GUI()
 
-#  exec(base64.b64decode(my_code))

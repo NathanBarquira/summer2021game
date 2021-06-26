@@ -1,6 +1,0 @@
-medium 13
-easy 19
-easy 18
-medium 16
-medium 3
-medium 15
