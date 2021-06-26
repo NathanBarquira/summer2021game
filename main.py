@@ -160,8 +160,6 @@ class GUI:
         else:
             print('DEBUG: something went wrong')
 
-
-
     def set_values(self):
         """ sets values for initialized boundaries """
         self.label_text = 'Your score: {}'.format(self.user_points)
