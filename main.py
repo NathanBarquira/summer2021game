@@ -2,6 +2,8 @@ import tkinter as tk
 import random
 # import base64
 
+# TODO: encrypt save file
+
 
 class GUI:
     def __init__(self):
