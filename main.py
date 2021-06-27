@@ -1,6 +1,7 @@
 import tkinter as tk
 import random
 import cypher
+import winsound
 
 # TODO: find a way to make exe file not detected as a trojan, if possible
 
@@ -238,6 +239,7 @@ class GUI:
     def button_pressed(self):
         """ when a button is pressed """
         print("DEBUG: a button is pressed")
+        winsound.PlaySound('hit_button.wav', winsound.SND_ASYNC)
         self.add_score()
         self.new_button.destroy()
         self.random_button()
@@ -255,6 +257,7 @@ class GUI:
 
     def wrong_button(self):
         """ executes when the wrong button is pressed """
+        winsound.PlaySound('Wrong_Sound.wav', winsound.SND_ASYNC)
         if self.user_points > 0:
             self.user_points -= 1
             print("DEBUG, shouldve subtracted a score", self.user_points)
