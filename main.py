@@ -1,5 +1,6 @@
 import tkinter as tk
 import random
+import cypher
 
 # TODO: find a way to make exe file not detected as a trojan, if possible
 
@@ -111,7 +112,8 @@ class GUI:
                     s = 0
                     temp_score = 0
                     for lines in file:
-                        split_lines = lines.split()
+                        decrypt = cypher.decrypt(lines, 5)
+                        split_lines = decrypt.split()
                         print('DEBUG: should be split lines', split_lines)
                         if split_lines[0] == 'easy':
                             if int(split_lines[1]) > temp_score:
@@ -131,7 +133,8 @@ class GUI:
                     s = 0
                     temp_score = 0
                     for lines in file:
-                        split_lines = lines.split()
+                        decrypt = cypher.decrypt(lines, 5)
+                        split_lines = decrypt.split()
                         if split_lines[0] == 'medium':
                             if int(split_lines[1]) > temp_score:
                                 temp_score = int(split_lines[1])
@@ -150,7 +153,8 @@ class GUI:
                     s = 0
                     temp_score = 0
                     for lines in file:
-                        split_lines = lines.split()
+                        decrypt = cypher.decrypt(lines, 5)
+                        split_lines = decrypt.split()
                         if split_lines[0] == 'hard':
                             if int(split_lines[1]) > temp_score:
                                 temp_score = int(split_lines[1])
@@ -213,13 +217,16 @@ class GUI:
         with open('highscores.txt', 'a') as file:
             if self.boundary == 4:
                 easy_format = 'easy {}\n'.format(self.user_points)
-                file.write(easy_format)
+                encoded_easy = cypher.encrypt(easy_format, 5)
+                file.write(encoded_easy)
             elif self.boundary == 9:
                 medium_format = 'medium {}\n'.format(self.user_points)
-                file.write(medium_format)
+                encoded_medium = cypher.encrypt(medium_format, 5)
+                file.write(encoded_medium)
             elif self.boundary == 14:
                 hard_format = 'hard {}\n'.format(self.user_points)
-                file.write(hard_format)
+                encoded_hard = cypher.encrypt(hard_format, 5)
+                file.write(encoded_hard)
 
         # labels for final points
         score_text = 'You got {} points!'.format(self.user_points)
