@@ -134,6 +134,8 @@ class GUI:
                     temp_score = 0
                     for lines in file:
                         decrypt = cypher.decrypt(lines, 5)
+                        if not decrypt:
+                            self.stop_cheating()
                         split_lines = decrypt.split()
                         if split_lines[0] == 'medium':
                             if int(split_lines[1]) > temp_score:
@@ -169,6 +171,26 @@ class GUI:
                 self.high_score_label.grid(columnspan=self.boundary, row=more_correct)
         else:
             print('DEBUG: something went wrong')
+
+    def stop_cheating(self):
+        """ should prompt if someone were to change save file """
+        self.master.destroy()
+        self.board_setup()
+
+        self.stop = tk.Label(self.master, text='STOP CHEATING!')
+        self.stop_okay = tk.Button(self.master, command=self.confirm_stop, text='Okay master')
+
+        self.stop.grid()
+        self.stop_okay.grid()
+
+        self.runUI()
+
+    def confirm_stop(self):
+        """ commands when someone pressed no more cheating button """
+        print('debug: confirmed stop')
+        with open('highscores.txt', 'w') as file:
+            file.write('')
+        return self.new_game()
 
     def set_values(self):
         """ sets values for initialized boundaries """

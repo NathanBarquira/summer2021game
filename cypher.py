@@ -64,9 +64,11 @@ def word_to_num(phrase):
                       'OneThree': 13, 'OneFour': 14, 'OneFive': 15, 'OneSix': 16, 'OneSeven': 17, 'OneEight': 18,
                       'OneNine': 19, 'TwoZero': 20, 'TwoOne': 21, 'TwoTwo': 22, 'TwoThree': 23, 'TwoFour': 24,
                       'TwoFive': 25, 'TwoSix': 26}
-    new_word = ''
-    split_phrase = phrase.split()
-    new_word = split_phrase[0] + ' {}'.format(str(word_text_dict[split_phrase[1]]))
+    try:
+        split_phrase = phrase.split()
+        new_word = split_phrase[0] + ' {}'.format(str(word_text_dict[split_phrase[1]]))
+    except KeyError:
+        return False
     return new_word
 
 def decrypt(ciphertext, key):
@@ -115,10 +117,10 @@ def decrypt(ciphertext, key):
 
 
 if __name__ == '__main__':
-    text = "medium 7"
-    s = 4
+    text = "medium 300"
+    s = 5
     encrypt_text = encrypt(text, s)
     print(encrypt_text)
-    decrypt_text = decrypt(encrypt_text, s)
-    print(decrypt_text)
+    # decrypt_text = decrypt(encrypt_text, s)
+    # print(decrypt_text)
 
