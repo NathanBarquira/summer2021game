@@ -163,7 +163,7 @@ class GUI:
                     if s == 0:
                         temp_label = 'High Score: 0'
                     self.high_score_label = tk.Label(self.master, text=temp_label)
-                    self.bottom_label.grid(columnspan=self.boundary, row=more_correct)
+                    self.high_score_label.grid(columnspan=self.boundary, row=more_correct)
             except FileNotFoundError:
                 self.high_score_label = tk.Label(self.master, text='High Score: 0')
                 self.high_score_label.grid(columnspan=self.boundary, row=more_correct)
