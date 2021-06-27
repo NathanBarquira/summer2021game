@@ -213,7 +213,11 @@ class GUI:
             accuracy = 100
         else:
             accuracy = (self.correct_presses / self.actual_presses) * 100
-        self.accuracy_var.set('Your accuracy: {:.1f}%'.format(accuracy))
+        if self.boundary == 4:
+            self.accuracy_var.set("""Accuracy:
+{:.1f}%""".format(accuracy))
+        else:
+            self.accuracy_var.set('Accuracy: {:.1f}%'.format(accuracy))
         print("DEBUG: should be label text", self.label_text)
 
     def create_map(self):
@@ -232,7 +236,7 @@ class GUI:
         self.random_x = random.randint(1, inclusive_correction)
         self.random_y = random.randint(1, inclusive_correction)
         print('DEBUG: should be random x and y', self.random_x, self.random_y)
-        self.new_button = tk.Button(self.master, width=2, height=1, command=self.button_pressed,
+        self.new_button = tk.Button(self.master, width=3, height=2, command=self.button_pressed,
                                     textvariable=self.button, bg='blue')
         self.new_button.grid(row=self.random_x, column=self.random_y)
 
