@@ -91,6 +91,9 @@ class GUI:
         """ initializes boundaries for aim trainer game"""
 
         # initializing the GUI variables
+        self.wrong_presses = 0
+        self.correct_presses = 0
+        self.actual_presses = 0
         self.user_points = 0
         self.user_points_var = tk.StringVar(self.master)
         self.button = tk.StringVar(self.master)
@@ -206,7 +209,7 @@ class GUI:
         """ create space of buttons """
         for i in range(1, self.boundary):
             for j in range(1, self.boundary):
-                self.map_label = tk.Label(self.master, width=3, height=2)
+                self.map_label = tk.Button(self.master, width=3, height=2, command=self.wrong_button)
                 self.map_label.grid(row=i, column=j)
 
     def random_button(self):
@@ -233,7 +236,22 @@ class GUI:
         """ add a point to the user for clicking the button """
         self.user_points += 1
         print("DEBUG, shouldve added a score", self.user_points)
+        self.correct_presses += 1
+        print("DEBUG, shouldve added a correct press", self.correct_presses)
+        self.actual_presses += 1
+        print("DEBUG, shouldve added an actual press", self.actual_presses)
         # initializing the GUI variables
+        self.set_values()
+
+    def wrong_button(self):
+        """ executes when the wrong button is pressed """
+        if self.user_points > 0:
+            self.user_points -= 1
+            print("DEBUG, shouldve subtracted a score", self.user_points)
+        self.wrong_presses += 1
+        print('DEBUG: should be amount of wrong presses', self.wrong_presses)
+        self.actual_presses += 1
+        print('DEBUG: should be amount of actual presses', self.actual_presses)
         self.set_values()
 
     def game_over(self):
@@ -255,7 +273,8 @@ class GUI:
                 file.write(encoded_hard)
 
         # labels for final points
-        score_text = 'You got {} points!'.format(self.user_points)
+        self.accuracy = (self.correct_presses / self.actual_presses) * 100
+        score_text = 'You got {} points at {:.2f}% accuracy!'.format(self.user_points, self.accuracy)
         self.score_label = tk.Label(self.master, text=score_text)
         self.score_label.grid(columnspan=2, row=0)
         self.play_again = tk.Label(self.master, text='would you like to play another game?')
