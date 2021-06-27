@@ -113,6 +113,8 @@ class GUI:
                     temp_score = 0
                     for lines in file:
                         decrypt = cypher.decrypt(lines, 5)
+                        if not decrypt:
+                            self.stop_cheating()
                         split_lines = decrypt.split()
                         print('DEBUG: should be split lines', split_lines)
                         if split_lines[0] == 'easy':
@@ -156,6 +158,8 @@ class GUI:
                     temp_score = 0
                     for lines in file:
                         decrypt = cypher.decrypt(lines, 5)
+                        if not decrypt:
+                            self.stop_cheating()
                         split_lines = decrypt.split()
                         if split_lines[0] == 'hard':
                             if int(split_lines[1]) > temp_score:
