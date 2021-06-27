@@ -97,16 +97,20 @@ class GUI:
         self.user_points = 0
         self.user_points_var = tk.StringVar(self.master)
         self.button = tk.StringVar(self.master)
+        self.accuracy_var = tk.StringVar(self.master)
 
         # corrections for self.boundary logic
         correction = self.boundary + 1
         more_correct = correction + 1
+        even_more_correct = more_correct + 1
 
         # labels
         self.top_label = tk.Label(self.master, text='aim trainer')
         self.top_label.grid(columnspan=self.boundary, row=0)
         self.bottom_label = tk.Label(self.master, textvariable=self.user_points_var)
         self.bottom_label.grid(columnspan=self.boundary, row=correction)
+        self.accuracy_label = tk.Label(self.master, textvariable=self.accuracy_var)
+        self.accuracy_label.grid(columnspan=self.boundary, row=more_correct)
 
         # distinguishing between difficulties
         if self.boundary == 4:
@@ -128,10 +132,10 @@ class GUI:
                     if s == 0:
                         temp_label = 'High Score: 0'
                     self.high_score_label = tk.Label(self.master, text=temp_label)
-                    self.high_score_label.grid(columnspan=self.boundary, row=more_correct)
+                    self.high_score_label.grid(columnspan=self.boundary, row=even_more_correct)
             except FileNotFoundError:
                 self.high_score_label = tk.Label(self.master, text='High Score: 0')
-                self.high_score_label.grid(columnspan=self.boundary, row=more_correct)
+                self.high_score_label.grid(columnspan=self.boundary, row=even_more_correct)
         elif self.boundary == 9:
             try:
                 with open('highscores.txt', 'r') as file:
@@ -150,10 +154,10 @@ class GUI:
                     if s == 0:
                         temp_label = 'High Score: 0'
                     self.high_score_label = tk.Label(self.master, text=temp_label)
-                    self.high_score_label.grid(columnspan=self.boundary, row=more_correct)
+                    self.high_score_label.grid(columnspan=self.boundary, row=even_more_correct)
             except FileNotFoundError:
                 self.high_score_label = tk.Label(self.master, text='High Score: 0')
-                self.high_score_label.grid(columnspan=self.boundary, row=more_correct)
+                self.high_score_label.grid(columnspan=self.boundary, row=even_more_correct)
         elif self.boundary == 14:
             try:
                 with open('highscores.txt', 'r') as file:
@@ -172,10 +176,10 @@ class GUI:
                     if s == 0:
                         temp_label = 'High Score: 0'
                     self.high_score_label = tk.Label(self.master, text=temp_label)
-                    self.high_score_label.grid(columnspan=self.boundary, row=more_correct)
+                    self.high_score_label.grid(columnspan=self.boundary, row=even_more_correct)
             except FileNotFoundError:
                 self.high_score_label = tk.Label(self.master, text='High Score: 0')
-                self.high_score_label.grid(columnspan=self.boundary, row=more_correct)
+                self.high_score_label.grid(columnspan=self.boundary, row=even_more_correct)
         else:
             print('DEBUG: something went wrong')
 
@@ -203,6 +207,12 @@ class GUI:
         """ sets values for initialized boundaries """
         self.label_text = 'Your score: {}'.format(self.user_points)
         self.user_points_var.set(self.label_text)
+        print('debug: actual presses', self.actual_presses)
+        if self.actual_presses == 0:
+            accuracy = 100
+        else:
+            accuracy = (self.correct_presses / self.actual_presses) * 100
+        self.accuracy_var.set('Your accuracy: {:.1f}%'.format(accuracy))
         print("DEBUG: should be label text", self.label_text)
 
     def create_map(self):
@@ -273,11 +283,14 @@ class GUI:
                 file.write(encoded_hard)
 
         # labels for final points
-        self.accuracy = (self.correct_presses / self.actual_presses) * 100
-        score_text = 'You got {} points at {:.2f}% accuracy!'.format(self.user_points, self.accuracy)
+        try:
+            self.accuracy = (self.correct_presses / self.actual_presses) * 100
+            score_text = 'You got {} points at {:.2f}% accuracy!'.format(self.user_points, self.accuracy)
+        except ZeroDivisionError:
+            score_text = 'You got {} points at {:.2f}% accuracy!'.format(self.user_points, self.accuracy)
         self.score_label = tk.Label(self.master, text=score_text)
         self.score_label.grid(columnspan=2, row=0)
-        self.play_again = tk.Label(self.master, text='would you like to play another game?')
+        self.play_again = tk.Label(self.master, text='Would you like to play another game?')
         self.play_again.grid(columnspan=2, row=1)
         self.play_again_button_yes = tk.Button(self.master, command=self.game_loop, text='Yes', width=5)
         self.play_again_button_yes.grid(row=2, column=0)
