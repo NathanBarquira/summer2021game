@@ -20,7 +20,7 @@ class GUI:
     def board_setup(self):
         """ Creating the board """
         self.master = tk.Tk()
-        self.master.title('Aim trainer')
+        self.master.title('Aim Trainer')
         self.master.geometry('+{}+{}'.format(700, 300))
         # self.master.geometry('1280x720')
         self.master.configure(background='white')
@@ -106,7 +106,7 @@ class GUI:
         even_more_correct = more_correct + 1
 
         # labels
-        self.top_label = tk.Label(self.master, text='aim trainer')
+        self.top_label = tk.Label(self.master, text='Aim Trainer')
         self.top_label.grid(columnspan=self.boundary, row=0)
         self.bottom_label = tk.Label(self.master, textvariable=self.user_points_var)
         self.bottom_label.grid(columnspan=self.boundary, row=correction)
@@ -206,7 +206,7 @@ class GUI:
 
     def set_values(self):
         """ sets values for initialized boundaries """
-        self.label_text = 'Your score: {}'.format(self.user_points)
+        self.label_text = 'Your Score: {}'.format(self.user_points)
         self.user_points_var.set(self.label_text)
         print('debug: actual presses', self.actual_presses)
         if self.actual_presses == 0:
